@@ -10,7 +10,7 @@ function NewsArea(props) {
     const [dataList, setDataList] = useState([]);
     const [nextPage, setNextPage] = useState('');
     const [hasMore, setHasMore] = useState(false);
-    const [category, setCategory] = useState(props.title.toLowerCase())
+    const category = props.title.toLowerCase();
 
 
     const getNews = async () => {
@@ -21,7 +21,7 @@ function NewsArea(props) {
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': key,  // Env variable is not working
+                'X-RapidAPI-Key': key,  // TODO: Env variable is not working
                 'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
             }
         };
@@ -47,7 +47,7 @@ function NewsArea(props) {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': key,  // Env variable is not working
+                    'X-RapidAPI-Key': key,  // TODO: Env variable is not working
                     'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
                 }
             };
@@ -74,7 +74,7 @@ function NewsArea(props) {
 
     useEffect(() => {
         getNews();
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -84,21 +84,23 @@ function NewsArea(props) {
                 dataLength={dataList.length}
                 next={fetchMoreData}
                 hasMore={hasMore}
-                loader={<h4>Loading...</h4>}
+                loader={<h4>Loading...</h4>}  // TODO : Spinner Component need to be added
             >
 
                 <div className="container d-flex flex-row mb-3 flex-wrap">
-                    {dataList && dataList.map(item => (
+                    {dataList.length === 0 ? <h2 className='text-align-center'>Loading... Please Wait!</h2> :
 
-                        <NewItem title={item.title}
-                            description={item.description}
-                            newsUrl={item.link}
-                            publishedDate={item.pubDate}
-                            imageUrl={item.image_url ? item.image_url : defaultImageUrl}
-                            source={item.source_id}
-                            key={item.link + item.title}
-                        />
-                    ))}
+                        dataList.map(item => (
+
+                            <NewItem title={item.title ? item.title : ''}
+                                description={item.description ? item.description : ''}
+                                newsUrl={item.link ? item.link : ''}
+                                publishedDate={item.pubDate ? item.pubDate : ''}
+                                imageUrl={item.image_url ? item.image_url : defaultImageUrl}
+                                source={item.source_id ? item.source_id : ''}
+                                key={item.link + item.title}
+                            />
+                        ))}
 
                 </div>
             </InfiniteScroll>
