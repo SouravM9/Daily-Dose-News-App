@@ -10,12 +10,14 @@ function NewsArea(props) {
     const [dataList, setDataList] = useState([]);
     const [nextPage, setNextPage] = useState('');
     const [hasMore, setHasMore] = useState(false);
+    const [category, setCategory] = useState(props.title.toLowerCase())
 
 
     const getNews = async () => {
 
-        const url = 'https://newsdata2.p.rapidapi.com/news?country=in&language=en';
+        const url = `https://newsdata2.p.rapidapi.com/news?country=in&category=${category}&language=en`;
 
+        console.log(category);
         const options = {
             method: 'GET',
             headers: {
@@ -40,7 +42,7 @@ function NewsArea(props) {
     const fetchMoreData = async () => {
 
         if (nextPage !== '') {
-            const url = `https://newsdata2.p.rapidapi.com/news?country=in&language=en&page=${nextPage}`;
+            const url = `https://newsdata2.p.rapidapi.com/news?country=in&category=${category}&language=en&page=${nextPage}`;
 
             const options = {
                 method: 'GET',
