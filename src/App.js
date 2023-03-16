@@ -63,7 +63,5 @@ function App() {
 
 //   Issues & Modifications : 
 // 1. Env variable not working
-// 2. Spinner 
-// 3. Duplicate news items coming
 
 export default App;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NewItem from './NewItem'
 import key from '../key.js'
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingSpinner from './LoadingSpinner';
 
 function NewsArea(props) {
 
@@ -17,7 +18,6 @@ function NewsArea(props) {
 
         const url = `https://newsdata2.p.rapidapi.com/news?country=in&category=${category}&language=en`;
 
-        console.log(category);
         const options = {
             method: 'GET',
             headers: {
@@ -30,11 +30,16 @@ function NewsArea(props) {
             .then(res => res.json())
             .then(json => {
 
-                if (json['nextPage']) {
+                if (json.nextPage) {
                     setHasMore(true);
-                    setNextPage(json['nextPage']);
+                    setNextPage(json.nextPage);
                 }
-                setDataList(json['results']);
+                setDataList(json.results.filter((value, index, self) =>     // Filter out the duplicate values
+                    index === self.findIndex((t) => (
+                        t.link === value.link
+                    ))
+                ));
+
             })
             .catch(err => console.error('error:' + err));
     }
@@ -56,13 +61,16 @@ function NewsArea(props) {
                 .then(res => res.json())
                 .then(json => {
 
-                    if (json['nextPage']) {
+                    if (json.nextPage) {
 
                         setHasMore(true);
-                        setNextPage(json['nextPage']);
+                        setNextPage(json.nextPage);
                     }
                     let oldNews = dataList;
-                    setDataList(oldNews.concat(json['results']));
+                    setDataList(oldNews.concat(json.results).filter((value, index, self) =>  // Filter out the duplicate values
+                        index === self.findIndex((t) => (
+                            t.link === value.link
+                        ))))
                 })
                 .catch(err => console.error('error:' + err));
         }
@@ -84,11 +92,11 @@ function NewsArea(props) {
                 dataLength={dataList.length}
                 next={fetchMoreData}
                 hasMore={hasMore}
-                loader={<h4>Loading...</h4>}  // TODO : Spinner Component need to be added
+                loader={<LoadingSpinner />} 
             >
 
                 <div className="container d-flex flex-row mb-3 flex-wrap">
-                    {dataList.length === 0 ? <h2 className='text-align-center'>Loading... Please Wait!</h2> :
+                    {dataList.length === 0 ? <LoadingSpinner /> :
 
                         dataList.map(item => (
 
