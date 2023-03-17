@@ -63,5 +63,8 @@ function App() {
 
 //   Issues & Modifications : 
 // - Env variable not working
+// - Instead of published date, do something like 1 hour / 2 hour for published date
+// - Modern loading slider at the top
+// - Create a new icon
 
 export default App;

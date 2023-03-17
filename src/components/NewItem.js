@@ -22,7 +22,7 @@ function NewItem(props) {
             </div>
 
             <div className="card-body">
-                <a href={props.newsUrl} className="btn btn-primary">Read More</a>
+                <a href={props.newsUrl} className="btn btn-primary" target="_blank" rel="noreferrer">Read More</a>
             </div>
         </div>
 
