@@ -21,11 +21,13 @@ function NewsArea(props) {
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': key,  // TODO: Env variable is not working
+                // 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,  // TODO: Env variable is not working
+                'X-RapidAPI-Key': key,  
                 'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
             }
         };
 
+        document.title = `Daily Dose | Latest ${props.title} News`
         fetch(url, options)
             .then(res => res.json())
             .then(json => {
@@ -52,7 +54,8 @@ function NewsArea(props) {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': key,  // TODO: Env variable is not working
+                    // 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,  // TODO: Env variable is not working
+                    'X-RapidAPI-Key': key,  
                     'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
                 }
             };

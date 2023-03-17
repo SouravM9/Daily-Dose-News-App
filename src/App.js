@@ -62,6 +62,6 @@ function App() {
 }
 
 //   Issues & Modifications : 
-// 1. Env variable not working
+// - Env variable not working
 
 export default App;
