@@ -63,6 +63,5 @@ function App() {
 
 //   Issues & Modifications : 
 // - Env variable not working
-// - Modern loading slider at the top
 
 export default App;
