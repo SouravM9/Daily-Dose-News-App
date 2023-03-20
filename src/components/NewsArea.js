@@ -22,7 +22,7 @@ function NewsArea(props) {
             method: 'GET',
             headers: {
                 // 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,  // TODO: Env variable is not working
-                'X-RapidAPI-Key': key,  
+                'X-RapidAPI-Key': key,
                 'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
             }
         };
@@ -55,7 +55,7 @@ function NewsArea(props) {
                 method: 'GET',
                 headers: {
                     // 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,  // TODO: Env variable is not working
-                    'X-RapidAPI-Key': key,  
+                    'X-RapidAPI-Key': key,
                     'X-RapidAPI-Host': 'newsdata2.p.rapidapi.com'
                 }
             };
@@ -84,9 +84,28 @@ function NewsArea(props) {
     };
 
     useEffect(() => {
+        //convertDate();
         getNews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const convertDate = (date) => {
+
+        const date1 = new Date(date);
+        const date2 = new Date(Date.now());
+        const diffTime = Math.abs(date2 - date1);
+        const difInMinutes = Math.ceil(diffTime / (60000));
+        const difInHours = Math.ceil(difInMinutes / 60);
+        const difInDays = Math.ceil(difInHours / 24);
+
+        if (difInDays > 1)
+            return difInDays + ' days';
+        else if (difInHours > 1)
+            return difInHours + ' hours';
+        else
+            return difInMinutes + ' minutes';
+
+    }
 
     return (
         <>
@@ -95,7 +114,7 @@ function NewsArea(props) {
                 dataLength={dataList.length}
                 next={fetchMoreData}
                 hasMore={hasMore}
-                loader={<LoadingSpinner />} 
+                loader={<LoadingSpinner />}
             >
 
                 <div className="container d-flex flex-row mb-3 flex-wrap">
@@ -106,7 +125,7 @@ function NewsArea(props) {
                             <NewItem title={item.title ? item.title : ''}
                                 description={item.description ? item.description : ''}
                                 newsUrl={item.link ? item.link : ''}
-                                publishedDate={item.pubDate ? item.pubDate : ''}
+                                publishedDate={item.pubDate ? convertDate(item.pubDate) : ''}
                                 imageUrl={item.image_url ? item.image_url : defaultImageUrl}
                                 source={item.source_id ? item.source_id : ''}
                                 key={item.link + item.title}
