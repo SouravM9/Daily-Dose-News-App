@@ -3,6 +3,7 @@ import NewItem from './NewItem'
 import key from '../key.js'
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingSpinner from './LoadingSpinner';
+import LoadingBar from 'react-top-loading-bar';
 
 function NewsArea(props) {
 
@@ -12,7 +13,7 @@ function NewsArea(props) {
     const [nextPage, setNextPage] = useState('');
     const [hasMore, setHasMore] = useState(false);
     const category = props.title.toLowerCase();
-
+    const [progress, setProgress] = useState(10);
 
     const getNews = async () => {
 
@@ -28,7 +29,7 @@ function NewsArea(props) {
         };
 
         document.title = `Daily Dose | Latest ${props.title} News`
-        fetch(url, options)
+        await fetch(url, options)
             .then(res => res.json())
             .then(json => {
 
@@ -44,6 +45,7 @@ function NewsArea(props) {
 
             })
             .catch(err => console.error('error:' + err));
+            setProgress(100);
     }
 
     const fetchMoreData = async () => {
@@ -84,7 +86,6 @@ function NewsArea(props) {
     };
 
     useEffect(() => {
-        //convertDate();
         getNews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -99,16 +100,20 @@ function NewsArea(props) {
         const difInDays = Math.ceil(difInHours / 24);
 
         if (difInDays > 1)
-            return difInDays + ' days';
+            return difInDays + ' days ago';
         else if (difInHours > 1)
-            return difInHours + ' hours';
+            return difInHours + ' hours ago';
         else
-            return difInMinutes + ' minutes';
+            return difInMinutes + ' minutes ago';
 
     }
 
     return (
         <>
+        <LoadingBar
+          color='#f11946'
+          progress={progress}
+        />
             <h1>{props.title} Dose</h1>
             <InfiniteScroll
                 dataLength={dataList.length}
