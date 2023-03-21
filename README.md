@@ -1,4 +1,4 @@
-### Daily Dose News Application
+# Daily Dose News Application
 
 Daily dose is a frontend web application built using ReactJs. This is fetching latest news data from RapidAPI and displays.
 
@@ -16,4 +16,4 @@ Daily dose is a frontend web application built using ReactJs. This is fetching l
 - react-infinite-scroll-component
 - react-top-loading-bar 
 
-# Live Hosted on <a href='https://daily-dose-sm.netlify.app/' target="_blank" rel="noreferrer">Link</a>
+### Live Hosted on <a href='https://daily-dose-sm.netlify.app/' target="_blank" rel="noreferrer">Link</a>
